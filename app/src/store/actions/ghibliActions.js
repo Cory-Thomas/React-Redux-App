@@ -18,7 +18,7 @@ export const fetchMovies = () => {
             dispatch({
                 type: FETCH_MOVIES_ERROR,
                 payload: { message: "Movies did not load" }
-            });
-        });
-  };
+         });
+    });
+    };
 };
