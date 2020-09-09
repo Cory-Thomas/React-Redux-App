@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from "react-redux";
+import { fetchMovies } from "./store/actions";
+import Movies from "./components/Movies";
 
-function App() {
+const App = ({ fetchMovies, loadingMovies, errorMessage }) => {
+  useEffect( () => {
+    fetchMovies();
+  }, [ fetchMovies ]);
+
   return (
-    <div className="App">
-      Hey
+    <div>
+      <h1>
+        Collection of Ghibli Movies
+      </h1>
+      { !loadingMovies ? <Movies /> : <div>... Fetching movies</div> }
+      { errorMessage !== "" ? <div>{ errorMessage }</div> : null }
     </div>
   );
-}
+};
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    loadingMovies: state.loadingMovies,
+    errorMessage: state.errorMessage
+  };
+};
+
+export default connect( mapStateToProps, { fetchMovies })( App );
